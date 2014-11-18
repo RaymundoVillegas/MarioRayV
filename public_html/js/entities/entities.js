@@ -6,7 +6,7 @@ game.PlayerEntity = me.Entity.extend ({
               spritewidth: "128",
               spriteheight: "128",
               width: 128,
-              hieght: 128,
+              height: 128,
               getShape: function(){
                   return(new me.Rect(0, 0, 128, 128)).toPolygon();
               }
