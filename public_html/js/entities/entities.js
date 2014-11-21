@@ -21,6 +21,8 @@ game.PlayerEntity = me.Entity.extend ({
     },
     
     update: function(delta){
+        
+        
      if(me.input.isKeyPressed("right")){
          this.body.vel.x += this.body.accel.x * me.timer.tick;
   
@@ -28,19 +30,32 @@ game.PlayerEntity = me.Entity.extend ({
          this.body.vel.x  = 0;
      }
      
+     
+     
     if(this.body.vel.x !==0){
             if (!this.renderable.isCurrentAnimation("smallWalk")) {
                 this.renderable.setCurrentAnimation("smallWalk");
                 this.renderable.setAnimationFrame();
-            }
+            }           
     }else{
         this.renderable.setCurrentAnimation("idle");
-    }
-            
+    }     
         
     this.body.update(delta);
     this._super(me.Entity, "update", [delta]);
     return true;
+    },
+    
+    
+});
+
+game.LevelTrigger = me.Entity.extend({
+    init: function(x, y, settings){
+        this.super(me.Entity, 'init', [x, y, settings]);
+    },
+   
+    onCollison: function(){
+        
     }
     
 });
