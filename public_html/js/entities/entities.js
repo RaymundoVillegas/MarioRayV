@@ -8,7 +8,7 @@ game.PlayerEntity = me.Entity.extend ({
               width: 128,
               height: 128,
               getShape: function(){
-                  return(new me.Rect(0, 0, 128, 128)).toPolygon();
+                  return(new me.Rect(0, 0, 30, 128)).toPolygon();
               }
         }]);
         
@@ -23,13 +23,24 @@ game.PlayerEntity = me.Entity.extend ({
     
     update: function(delta){
         
-        
-     if(me.input.isKeyPressed("right")){
+         if (me.input.isKeyPressed('left')) {
+            // flip the sprite on horizontal axis
+            this.flipX(true);
+            // update the entity velocity
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            // change to the walking animation}
+        }
+       else if(me.input.isKeyPressed("right")){
          this.body.vel.x += this.body.accel.x * me.timer.tick;
-  
-     }else{
+         this.flipX(false);
+          }            
+        else{
          this.body.vel.x  = 0;
      }
+     
+      if (!this.renderable.isCurrentAnimation("smallWalk")) {
+                this.renderable.setCurrentAnimation("smallWalk");
+      }
      
      this.body.update(delta);
      me.collision.check(this, true, this.collideHandler.bind(this), true);
@@ -43,13 +54,31 @@ game.PlayerEntity = me.Entity.extend ({
         this.renderable.setCurrentAnimation("idle");
     }     
          
+   if (me.input.isKeyPressed('jump')) {
+            // make sure we are not already jumping or falling
+            if (!this.body.jumping && !this.body.falling) {
+                // set current vel to the maximum defined value
+                // gravity will then do the rest
+                this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                // set the jumping flag
+                this.body.jumping = true;
+            }
+ 
+        }
+ 
+      
+ 
   
   
     this._super(me.Entity, "update", [delta]);
     return true;
+    
     },
     
-    collideHandler: function(response){
+    
+    
+    
+      collideHandler: function(response){
         
     }
    
