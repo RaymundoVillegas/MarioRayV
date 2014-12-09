@@ -40,14 +40,16 @@ var game = {
 	// Run on game resources loaded.
 	"loaded" : function () {
             me.pool.register("mario", game.PlayerEntity, true);
+            // this line of code talks about registering mario, meaning we are creating another perosn or thing into our game.
             me.pool.register("BadGuy", game.BadGuy);
+            //this line of code talks about registering "Bad Guy", meaning we are creating another person or thing into our game.
             
             me.pool.register("levelTrigger", game.LevelTrigger);
             
             me.state.set(me.state.MENU, new game.TitleScreen());
             me.state.set(me.state.PLAY, new game.PlayScreen());
 
-            // Start the game.
+            // Starts the game.
 	    me.state.change(me.state.MENU);
 	}
 };
